@@ -42,7 +42,7 @@ find_package(Boost 1.61.0)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
 else()
-  message(FATAL_ERROR "Could not find Boost libraries. Download and install at least version 1.54.0 to continue.")
+  message(FATAL_ERROR "Could not find Boost libraries. Download and install at least version 1.61.0 to continue.")
 endif()
 
 # Configure, build, and "install" Python
