@@ -37,9 +37,8 @@ endif()
 # Boost package defines
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME ON)
-add_subdirectory("thirdparty/boost-python")
-find_package(Boost 1.54.0)
+set(Boost_USE_STATIC_RUNTIME OFF)
+find_package(Boost 1.61.0)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
 else()
@@ -58,7 +57,7 @@ include_directories("${CMAKE_BINARY_DIR}/python/include/python3.5/")
 link_directories("${CMAKE_BINARY_DIR}/python/lib/")
 
 # Add in the projects
-
+add_subdirectory("thirdparty/boost-python")
 #add_subdirectory("mathlib")
 add_subdirectory("tier1")
 add_subdirectory("vgui2")
