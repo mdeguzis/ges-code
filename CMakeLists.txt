@@ -34,6 +34,18 @@ else()
   add_definitions(-DWIN32 -D_WIN32 -D_WINDOWS -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -D_DLL_EXT=.dll)
 endif()
 
+# Boost package defines
+set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME ON)
+add_subdirectory("thirdparty/boost-python")
+find_package(Boost 1.54.0)
+if(Boost_FOUND)
+  include_directories(${Boost_INCLUDE_DIRS})
+else()
+  message(FATAL_ERROR "Could not find Boost libraries. Download and install at least version 1.54.0 to continue.")
+endif()
+
 # Configure, build, and "install" Python
 ExternalProject_Add(python
   SOURCE_DIR "${CMAKE_SOURCE_DIR}/thirdparty/python"
@@ -45,19 +57,8 @@ ExternalProject_Add(python
 include_directories("${CMAKE_BINARY_DIR}/python/include/python3.5/")
 link_directories("${CMAKE_BINARY_DIR}/python/lib/")
 
-# Boost package defines
-set(Boost_USE_STATIC_LIBS OFF)
-set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.54.0)
-if(Boost_FOUND)
-  include_directories(${Boost_INCLUDE_DIRS})
-else()
-  message(FATAL_ERROR "Could not find Boost libraries. Download and install at least version 1.54.0 to continue.")
-endif()
-
 # Add in the projects
-add_subdirectory("thirdparty/boost-python")
+
 #add_subdirectory("mathlib")
 add_subdirectory("tier1")
 add_subdirectory("vgui2")
