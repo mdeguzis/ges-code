@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mdeguzis/ges-code.svg?branch=master)](https://travis-ci.org/mdeguzis/ges-code)
+
 # GoldenEye: Source
 ## About
 A total conversion modification of Half-Life 2. We are a fan made artistic 
