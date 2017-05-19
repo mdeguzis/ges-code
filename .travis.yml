@@ -1,0 +1,44 @@
+# Use 32 bit docker OS image for testing: https://github.com/travis-ci/travis-ci/issues/5770
+# For Docker image, see: https://hub.docker.com/r/daald/ubuntu32/tags/
+
+# Builds are split, so be careful how this is written
+# See: https://docs.travis-ci.com/user/speeding-up-the-build/
+
+os:
+  - linux
+
+sudo: required
+language: C++
+
+# safelist
+branches:
+  only:
+    - develop-master
+
+services:
+- docker
+
+# Setup up preferred docker iamges
+env:
+  - CONFIG=Arch_Linux CI_DOCKER_IMAGE=professorkaos64/arch-linux-32:latest DISTRO=archlinux ARCH=i386
+  - CONFIG=Debian_Jessie CI_DOCKER_IMAGE=32bit/debian:jessie DISTRO=debian ARCH=i386
+  - CONFIG=Ubuntu_Xenial CI_DOCKER_IMAGE=ioft/i386-ubuntu:xenial DISTRO=ubuntu ARCH=i386
+  - CONFIG=Fedora_24 CI_DOCKER_IMAGE=professorkaos64/fedora-32:latest DISTRO=fedora ARCH=i386
+
+# Pull containers from Docker Hub.
+before_install:
+  - docker pull $CI_DOCKER_IMAGE
+
+# Start the container from the image and perform tests.
+# linux32 will correct any false reporting of non-32bit (such as the 32 bit Arch Linux container)
+# Cannot pass i686 as an argument to linux32 on Arch Linux, so keep i386. uname -m will still report i686
+# Add a command to show all the variables. May be useful for debugging Travis.
+script:
+  - echo "--CXX version?"; "$CXX" --version; echo "--CXX version confirmed";
+  - "docker run -i -v \"${PWD}:/ges-code\" $CI_DOCKER_IMAGE /bin/bash -c \"linux32 --32bit $ARCH /ges-code/travis/build-ges-$DISTRO-docker.sh\""
+
+# Email on failure only
+notifications:
+  email:
+    on_success: never
+    on_failure: never
