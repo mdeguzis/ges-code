@@ -13,7 +13,7 @@ language: C++
 # safelist
 branches:
   only:
-    - develop-master
+    - develop
 
 services:
 - docker
