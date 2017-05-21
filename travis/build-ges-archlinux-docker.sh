@@ -9,7 +9,11 @@ sleep 2s
 ######################
 
 pacman -Syy
-#pacman -S --noconfirm make cmake boost-libs boost git gcc glibc libstdc++5
+# Make sure the keyring is up to date first
+pacman -Sy archlinux-keyring
+# Upgrade
+pacman -Syu
+# Install needed packages
 pacman -S --noconfirm make cmake boost-libs boost git gcc glibc libstdc++5 expat gdbm sqlite zlib
 git submodule init --recursive
 
