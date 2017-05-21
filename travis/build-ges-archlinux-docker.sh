@@ -10,7 +10,7 @@ sleep 2s
 
 pacman -Syy
 # Make sure the keyring is up to date first
-pacman -Sy archlinux-keyring
+pacman -Sy -noconfirm archlinux-keyring
 # Upgrade
 pacman -Syu
 # Install needed packages
